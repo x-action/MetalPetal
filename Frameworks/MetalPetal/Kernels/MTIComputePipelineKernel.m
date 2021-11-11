@@ -123,12 +123,13 @@ __attribute__((objc_subclassing_restricted))
     
     [commandEncoder setComputePipelineState:computePipeline.state];
 
-    NSUInteger index = 0;
+    [commandEncoder setTexture:renderTarget.texture atIndex:0];
+    NSUInteger index = 1;
     for (MTIImage *image in self.inputImages) {
         [commandEncoder setTexture:[renderingContext resolvedTextureForImage:image] atIndex:index];
         index += 1;
     }
-    [commandEncoder setTexture:renderTarget.texture atIndex:index];
+
     
     [MTIFunctionArgumentsEncoder encodeArguments:computePipeline.reflection.arguments values:self.functionParameters functionType:MTLFunctionTypeKernel encoder:commandEncoder error:&error];
     
